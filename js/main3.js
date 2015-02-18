@@ -27,6 +27,7 @@ window.onload = function() {
     var background;
     var fire;
     var ice;
+    var cursors;
 
     var bodyDry;
     
@@ -40,7 +41,7 @@ window.onload = function() {
         game.physics.enable(fire, Phaser.Physics.ARCADE);
 
         ice = game.add.sprite( game.world.centerX + 50 , game.world.centerY, 'ice');
-        game.physcis.enable(ice, Phaser.Physics.ARCADE);
+        game.physics.enable(ice, Phaser.Physics.ARCADE);
     }
 
     function update() {
@@ -71,7 +72,7 @@ window.onload = function() {
             fire.body.velocity.y = 150;
         }
 
-        if(cursors.w.isDown){
+       /* if(cursors.w.isDown){
             ice.body.velocity.y = 150;
         }
         else if(cursors.s.isDown){
@@ -82,6 +83,6 @@ window.onload = function() {
         }
         else if(cursors.d.isDown){
             ice.body.velocity.x = 150;
-        }
+        }*/
     }
 };
