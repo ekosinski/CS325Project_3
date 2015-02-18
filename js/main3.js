@@ -28,6 +28,10 @@ window.onload = function() {
     var fire;
     var ice;
     var cursors;
+    var key1;
+    var key2;
+    var key3;
+    var key4;
 
     var bodyDry;
     
@@ -42,6 +46,10 @@ window.onload = function() {
 
         ice = game.add.sprite( game.world.centerX + 50 , game.world.centerY, 'ice');
         game.physics.enable(ice, Phaser.Physics.ARCADE);
+        key1 = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+        key2 = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
+        key3 = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
+        key4 = game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
     }
 
     function update() {
@@ -72,17 +80,18 @@ window.onload = function() {
             fire.body.velocity.y = 150;
         }
 
-       /* if(cursors.w.isDown){
+
+        if(key1.isDown){
             ice.body.velocity.y = 150;
         }
-        else if(cursors.s.isDown){
+        else if(key2.isDown){
             ice.body.velocity.y = -150;
         }
-        else if(cursors.a.isDown){
+        else if(key3.isDown){
             ice.body.velocity.x = -150;
         }
-        else if(cursors.d.isDown){
+        else if(key4.isDown){
             ice.body.velocity.x = 150;
-        }*/
+        }
     }
 };
