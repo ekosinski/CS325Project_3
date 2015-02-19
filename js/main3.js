@@ -22,6 +22,7 @@ window.onload = function() {
         //game.load.audio( 'bodyDry', 'assets/01 -Before my body is dry.mp3');
         game.load.image('fire','assets/fire.png');
         game.load.image('ice','assets/ice.png');
+        game.load.image('collide','assets/collide.png');
     }
     
     var background;
@@ -32,6 +33,8 @@ window.onload = function() {
     var key2;
     var key3;
     var key4;
+    var collide;
+    var collide1;
 
     var bodyDry;
     
@@ -41,11 +44,27 @@ window.onload = function() {
         game.physics.startSystem(Phaser.Physics.ARCADE);
         background = game.add.tileSprite(0,0,800,600,'background');
         //  A simple background for our game
-        fire = game.add.sprite(game.world.centerX - 50 ,game.world.centerY, 'fire');
+        //Create the images here
+        fire = game.add.sprite(game.world.centerX - 500 ,game.world.centerY, 'fire');
         game.physics.enable(fire, Phaser.Physics.ARCADE);
 
-        ice = game.add.sprite( game.world.centerX + 50 , game.world.centerY, 'ice');
+        ice = game.add.sprite( game.world.centerX + 500 , game.world.centerY, 'ice');
         game.physics.enable(ice, Phaser.Physics.ARCADE);
+
+        collide1 = game.add.sprite(50,150,'collide');
+        game.physics.enable(collide1,Phaser.Physics.ARCADE);
+        collide1.body.immovable = true;
+
+        collide = game.add.sprite(game.world.centerX, game.world.centerY,'collide');
+        game.physics.enable(collide, Phaser.Physics.ARCADE);
+        collide.body.immovable = true;
+
+        
+        //Makes sure player characters collide with the world.
+        fire.body.collideWorldBounds = true;
+        ice.body.collideWorldBounds = true;
+        collide.body.collideWorldBounds = true;
+
         key1 = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
         key2 = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
         key3 = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
@@ -60,6 +79,22 @@ window.onload = function() {
         // This function returns the rotation angle that makes it visually match its
         // new trajectory.
         //bouncy.rotation = game.physics.arcade.accelerateToPointer( bouncy, this.game.input.activePointer, 500, 500, 500 );
+
+        game.physics.arcade.overlap(fire, ice, crash, null, this);
+        //Game rules
+        game.debug.text('Red capture Blue!!!', 32, 32);
+
+        collide.body.velocity.x = 0;
+        collide.body.velocity.y = 0;
+
+        //Collision blocks
+        game.physics.arcade.collide(fire,collide);
+        game.physics.arcade.collide(ice,collide);
+        game.physics.arcade.collide(fire,collide1);
+        game.physics.arcade.collide(ice,collide1);
+
+
+        //Movement Keys
         cursors = game.input.keyboard.createCursorKeys();
 
         fire.body.velocity.x = 0;
@@ -93,5 +128,11 @@ window.onload = function() {
         else if(key4.isDown){
             ice.body.velocity.x = 150;
         }
+    }
+
+
+    function crash(fire, ice){
+        ice.kill();
+        game.debug.text("Red wins! Refresh to play again.",game.world.centerX,game.world.centerY);
     }
 };
