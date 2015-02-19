@@ -20,6 +20,7 @@ window.onload = function() {
         //game.load.image( 'b', 'assets/phaser.png' );
         game.load.image( 'background', 'assets/fire_ice.png' );
         //game.load.audio( 'bodyDry', 'assets/01 -Before my body is dry.mp3');
+        game.load.audio('mario', 'assets/Mario_Slide.WAV');
         game.load.image('fire','assets/fire.png');
         game.load.image('ice','assets/ice.png');
         game.load.image('collide','assets/collide.png');
@@ -35,21 +36,43 @@ window.onload = function() {
     var key4;
     var collide;
     var collide1;
+    var collide2;
+    var collide3;
+    var collide4
 
-    var bodyDry;
+    var mario;
     
     function create() {
 
         //  We're going to be using physics, so enable the Arcade Physics system
         game.physics.startSystem(Phaser.Physics.ARCADE);
         background = game.add.tileSprite(0,0,800,600,'background');
+        mario = game.add.audio('mario');
+        mario.loop = true;
+        //mario.play();
         //  A simple background for our game
         //Create the images here
         fire = game.add.sprite(game.world.centerX - 500 ,game.world.centerY, 'fire');
         game.physics.enable(fire, Phaser.Physics.ARCADE);
+        fire.scale.x = 0.75;
+        fire.scale.y = 0.75;
 
         ice = game.add.sprite( game.world.centerX + 500 , game.world.centerY, 'ice');
         game.physics.enable(ice, Phaser.Physics.ARCADE);
+        ice.scale.x = 0.75;
+        ice.scale.y = 0.75;
+
+        collide4 = game.add.sprite(150,400,'collide');
+        game.physics.enable(collide4,Phaser.Physics.ARCADE);
+        collide4.body.immovable = true;
+
+        collide3 = game.add.sprite(580,95,'collide');
+        game.physics.enable(collide3,Phaser.Physics.ARCADE);
+        collide3.body.immovable = true;
+
+        collide2 = game.add.sprite(300,30,'collide');
+        game.physics.enable(collide2,Phaser.Physics.ARCADE);
+        collide2.body.immovable = true;
 
         collide1 = game.add.sprite(50,150,'collide');
         game.physics.enable(collide1,Phaser.Physics.ARCADE);
@@ -83,15 +106,20 @@ window.onload = function() {
         game.physics.arcade.overlap(fire, ice, crash, null, this);
         //Game rules
         game.debug.text('Red capture Blue!!!', 32, 32);
-
-        collide.body.velocity.x = 0;
-        collide.body.velocity.y = 0;
+        game.debug.text('Red use the arrow keys.', 32, 42);
+        game.debug.text('Blue use the number heys 1,2,3, and 4 to escape!');
 
         //Collision blocks
         game.physics.arcade.collide(fire,collide);
         game.physics.arcade.collide(ice,collide);
         game.physics.arcade.collide(fire,collide1);
         game.physics.arcade.collide(ice,collide1);
+        game.physics.arcade.collide(fire,collide2);
+        game.physics.arcade.collide(ice,collide2);
+        game.physics.arcade.collide(fire,collide3);
+        game.physics.arcade.collide(ice,collide3);
+        game.physics.arcade.collide(fire,collide4);
+        game.physics.arcade.collide(ice,collide4);
 
 
         //Movement Keys
@@ -103,16 +131,16 @@ window.onload = function() {
         ice.body.velocity.y = 0;
 
         if(cursors.left.isDown){
-            fire.body.velocity.x = -150;
+            fire.body.velocity.x = -180;
         }
         else if (cursors.right.isDown){
-            fire.body.velocity.x = 150;
+            fire.body.velocity.x = 180;
         }
         else if (cursors.up.isDown){
-            fire.body.velocity.y = -150;
+            fire.body.velocity.y = -180;
         }
         else if (cursors.down.isDown){
-            fire.body.velocity.y = 150;
+            fire.body.velocity.y = 180;
         }
 
 
