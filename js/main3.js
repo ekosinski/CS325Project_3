@@ -38,7 +38,8 @@ window.onload = function() {
     var collide1;
     var collide2;
     var collide3;
-    var collide4
+    var collide4;
+    var redSwitch = false;
 
     var mario;
     
@@ -49,7 +50,7 @@ window.onload = function() {
         background = game.add.tileSprite(0,0,800,600,'background');
         mario = game.add.audio('mario');
         mario.loop = true;
-        //mario.play();
+        mario.play();
         //  A simple background for our game
         //Create the images here
         fire = game.add.sprite(game.world.centerX - 500 ,game.world.centerY, 'fire');
@@ -102,12 +103,11 @@ window.onload = function() {
         // This function returns the rotation angle that makes it visually match its
         // new trajectory.
         //bouncy.rotation = game.physics.arcade.accelerateToPointer( bouncy, this.game.input.activePointer, 500, 500, 500 );
-
         game.physics.arcade.overlap(fire, ice, crash, null, this);
         //Game rules
         game.debug.text('Red capture Blue!!!', 32, 32);
         game.debug.text('Red use the arrow keys.', 32, 42);
-        game.debug.text('Blue use the number heys 1,2,3, and 4 to escape!');
+        game.debug.text('Blue use the number heys 1,2,3, and 4 to escape!',32,52);
 
         //Collision blocks
         game.physics.arcade.collide(fire,collide);
@@ -156,11 +156,17 @@ window.onload = function() {
         else if(key4.isDown){
             ice.body.velocity.x = 150;
         }
+
+        game.debug.text('You have 80 seconds to catch blue ' + this.game.time.totalElapsedSeconds(), 32, 62);
+        if(this.game.time.totalElapsedSeconds() > 80){
+            fire.kill();
+        }
+        
     }
 
 
     function crash(fire, ice){
         ice.kill();
-        game.debug.text("Red wins! Refresh to play again.",game.world.centerX,game.world.centerY);
+       
     }
 };
