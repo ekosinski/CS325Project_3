@@ -20,7 +20,7 @@ window.onload = function() {
         //game.load.image( 'b', 'assets/phaser.png' );
         game.load.image( 'background', 'assets/fire_ice.png' );
         //game.load.audio( 'bodyDry', 'assets/01 -Before my body is dry.mp3');
-        game.load.audio('mario', 'assets/Mario_Slide.WAV');
+        game.load.audio('mario', 'assets/Mario_Slide.wav');
         game.load.image('fire','assets/fire.png');
         game.load.image('ice','assets/ice.png');
         game.load.image('collide','assets/collide.png');
